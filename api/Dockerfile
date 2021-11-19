@@ -15,3 +15,8 @@ WORKDIR /app
 COPY --from=appserver /usr/src/demo/target/demo-0.0.1-SNAPSHOT.jar .
 ENTRYPOINT ["java", "-jar", "/app/demo-0.0.1-SNAPSHOT.jar"]
 CMD ["--spring.profiles.active=postgres"]
+
+FROM maven:3.6.3-jdk-8 AS test
+WORKDIR /usr/src/ddev
+COPY . .
+CMD ["mvn", "-f", "unit-pom.xml", "clean", "test"]
